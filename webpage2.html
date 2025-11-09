@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Travel Destination Guide – discover places, build simple itineraries, and explore tips for your next trip.">
+  <title>Travel Destination Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>✈️</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style> 
+    :root{
+  --bg:#0b0c10;
+  --panel:#111317;
+  --muted:#a6adbb;
+  --text:#eaf0f6;
+  --brand:#4cc9f0;
+  --brand-2:#f72585;
+  --ring: 0 0 0 3px color-mix(in oklab, var(--brand) 35%, transparent);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color:var(--text);
+  background:linear-gradient(180deg,#0b0c10 0%, #0e1116 70%, #0b0c10 100%);
+}
+img{max-width:100%;display:block}
+
+.container{width:min(1120px, 92%);margin-inline:auto}
+.section{padding-block:3.5rem;border-top:1px solid #1b1e25}
+.section:first-of-type{border-top:none}
+.section-head{margin-bottom:1.25rem}
+.section-head h2{font-family:"Playfair Display", serif; font-weight:700; font-size:2rem; letter-spacing:.2px; margin:0 0 .5rem}
+.section-head p{margin:0;color:var(--muted)}
+
+.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem .75rem;background:#000;border:1px solid #333;border-radius:.375rem}
+
+.site-header{position:sticky;top:0;z-index:50;background:rgba(11,12,16,.7);backdrop-filter:saturate(150%) blur(8px); border-bottom:1px solid #171a21}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:700}
+.logo{font-size:1.25rem}
+.brand-text{letter-spacing:.3px}
+.site-nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0}
+.site-nav a{color:var(--text);text-decoration:none;padding:.5rem .75rem;border-radius:.5rem}
+.site-nav a:hover{background:#171a21}
+
+.hero{position:relative;isolation:isolate}
+.hero-media{position:absolute;inset:0;z-index:-1;background: no-repeat center/cover var(--panel);background-image:var(--hero-img)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(11,12,16,.7), rgba(11,12,16,.85));z-index:-1}
+.hero-content{padding-block:5.5rem 3.5rem}
+.hero h1{font-family:"Playfair Display", serif; font-size:clamp(2rem, 4vw + .5rem, 3rem);letter-spacing:.3px;margin:0 0 .5rem}
+.hero p{margin:0 0 1rem;color:var(--muted)}
+
+.search{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.search input{flex:1 1 260px;min-width:0;padding:.8rem .9rem;border-radius:.6rem;border:1px solid #2a2f3a;background:#0f1217;color:var(--text);outline:none}
+.search input:focus{box-shadow:var(--ring);border-color:#2e9fd8}
+.search button{padding:.8rem 1rem;border-radius:.6rem;border:1px solid #2a2f3a;background:linear-gradient(180deg,#17202a,#141a22);color:var(--text);cursor:pointer}
+.search .help{display:block;width:100%;font-size:.9rem;color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.card-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:1rem;margin-top:1rem}
+@media (max-width: 900px){.card-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width: 620px){.card-grid{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,#0f1217,#0c0e12);border:1px solid #171a21;border-radius:.9rem;overflow:hidden;display:flex;flex-direction:column}
+.card-media{aspect-ratio: 16/10;overflow:hidden}
+.card-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.card:hover .card-media img{transform:scale(1.03)}
+.card-body{padding:1rem}
+.card h3{margin:.2rem 0 .6rem;font-size:1.1rem}
+.pill-list{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;margin:0 0 .75rem;padding:0}
+.pill-list li{padding:.35rem .6rem;border:1px solid #1a1f29;border-radius:999px;background:#0e1117;font-size:.9rem}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin:0 0 1rem}
+.facts dt{color:var(--muted);font-weight:600}
+.facts dd{margin:0}
+.button{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;color:var(--text);background:linear-gradient(180deg,#1a1f29,#121820);border:1px solid #1f2632;padding:.6rem .85rem;border-radius:.6rem}
+.button.ghost{background:transparent}
+.button.small{padding:.4rem .6rem;font-size:.9rem}
+
+.itinerary{display:grid;gap:1rem;counter-reset:day}
+.itinerary > li{list-style:none;margin:0;padding:1rem;border:1px solid #171a21;border-radius:.8rem;background:linear-gradient(180deg,#0f1217,#0c0e12)}
+.itinerary h3{margin:.2rem 0 .5rem;font-size:1.05rem}
+.callout{margin-top:1rem;padding:1rem;border:1px dashed #263142;border-radius:.8rem;background:#0e1218;color:var(--muted)}
+
+.tips-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+@media (max-width: 900px){.tips-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width: 620px){.tips-grid{grid-template-columns:1fr}}
+.tip{padding:1rem;border:1px solid #171a21;border-radius:.8rem;background:linear-gradient(180deg,#0f1217,#0c0e12)}
+.tip h3{margin:.2rem 0 .4rem;font-size:1.05rem}
+.tip p{margin:0;color:var(--muted)}
+
+.about{border:1px solid #171a21;border-radius:.8rem;background:linear-gradient(180deg,#0f1217,#0c0e12);padding:1rem}
+
+.site-footer{border-top:1px solid #171a21;margin-top:2rem}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+.footer-inner p{margin:0;color:var(--muted)}
+</style>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">✈️</span>
+        <span class="brand-text">Travel Destination Guide</span>
+      </div>
+      <nav class="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="#destinations">Destinations</a></li>
+          <li><a href="#itinerary">Itinerary</a></li>
+          <li><a href="#tips">Tips</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" role="region" aria-label="Featured destination">
+    <div class="hero-media" style="--hero-img: url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1600&auto=format&fit=crop');"></div>
+    <div class="container hero-content">
+      <h1>Plan your next escape</h1>
+      <p>Explore curated destinations, highlights, and an easy starter itinerary to make the most of your trip.</p>
+      <form class="search" role="search" aria-label="Search destinations" action="#destinations">
+        <label for="q" class="sr-only">Search destinations</label>
+        <input id="q" name="q" type="search" placeholder="Search destinations (static demo)" aria-describedby="search-help">
+        <button type="submit">Explore</button>
+        <span id="search-help" class="help">This demo is static - use the cards below.</span>
+      </form>
+    </div>
+  </section>
+
+  <main id="main" class="container" role="main">
+    <section id="destinations" class="section">
+      <div class="section-head">
+        <h2>Featured Destinations</h2>
+        <p>Handpicked places with highlights, ideal seasons, and quick facts.</p>
+      </div>
+      <div class="card-grid">
+        <article class="card">
+          <figure class="card-media">
+            <img src="https://images.unsplash.com/photo-1505764706515-aa95265c5abc?q=80&w=1200&auto=format&fit=crop" alt="Eiffel Tower in Paris at sunset">
+          </figure>
+          <div class="card-body">
+            <h3>Paris, France</h3>
+            <ul class="pill-list" aria-label="Highlights">
+              <li>Art & Museums</li>
+              <li>Cafés</li>
+              <li>Historic Walks</li>
+            </ul>
+            <dl class="facts">
+              <div>
+                <dt>Best time</dt>
+                <dd>Apr–Jun, Sep–Oct</dd>
+              </div>
+              <div>
+                <dt>Budget</dt>
+                <dd>XYZ</dd>
+              </div>
+            </dl>
+            <a class="button ghost" href="#itinerary">View sample itinerary</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <figure class="card-media">
+            <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1200&auto=format&fit=crop" alt="Shibuya Crossing in Tokyo at night">
+          </figure>
+          <div class="card-body">
+            <h3>Tokyo, Japan</h3>
+            <ul class="pill-list" aria-label="Highlights">
+              <li>Neon Nights</li>
+              <li>Food Markets</li>
+              <li>Tech Culture</li>
+            </ul>
+            <dl class="facts">
+              <div>
+                <dt>Best time</dt>
+                <dd>Mar–May, Oct–Nov</dd>
+              </div>
+              <div>
+                <dt>Budget</dt>
+                <dd>XYZ</dd>
+              </div>
+            </dl>
+            <a class="button ghost" href="#itinerary">View sample itinerary</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <figure class="card-media">
+            <img src="https://images.unsplash.com/photo-1491555103944-7c647fd857e6?q=80&w=1200&auto=format&fit=crop" alt="Santorini white buildings with blue domes over the sea">
+          </figure>
+          <div class="card-body">
+            <h3>Santorini, Greece</h3>
+            <ul class="pill-list" aria-label="Highlights">
+              <li>Sunsets</li>
+              <li>Beaches</li>
+              <li>Cliffside Views</li>
+            </ul>
+            <dl class="facts">
+              <div>
+                <dt>Best time</dt>
+                <dd>May–Jun, Sep</dd>
+              </div>
+              <div>
+                <dt>Budget</dt>
+                <dd>XYZ</dd>
+              </div>
+            </dl>
+            <a class="button ghost" href="#itinerary">View sample itinerary</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="itinerary" class="section">
+      <div class="section-head">
+        <h2>3-Day Starter Itinerary</h2>
+        <p>A simple framework you can adapt to any city.</p>
+      </div>
+
+      <ol class="itinerary">
+        <li>
+          <h3>Day 1: Landmarks & Orientation</h3>
+          <p>Start with a walking tour to learn the layout, then visit a top landmark. End with a local dinner spot.</p>
+        </li>
+        <li>
+          <h3>Day 2: Museums & Neighborhoods</h3>
+          <p>Pick two museums or cultural sites. Explore a distinct neighborhood for lunch and coffee breaks.</p>
+        </li>
+        <li>
+          <h3>Day 3: Nature & Views</h3>
+          <p>Morning hike or park visit. Sunset viewpoint or river cruise to unwind before departure.</p>
+        </li>
+      </ol>
+
+      <div class="callout">
+        <p><strong>Tip:</strong> Book popular sights in advance. Group nearby places to minimize transit time.</p>
+      </div>
+    </section>
+
+    <section id="tips" class="section">
+      <div class="section-head">
+        <h2>Travel Tips</h2>
+        <p>Quick advice to keep trips smooth and fun.</p>
+      </div>
+      <div class="tips-grid">
+        <div class="tip">
+          <h3>Pack light</h3>
+          <p>Carry versatile layers and comfortable walking shoes. Keep essentials in a small daypack.</p>
+        </div>
+        <div class="tip">
+          <h3>Use offline maps</h3>
+          <p>Download maps and transit info for times when data is expensive or unavailable.</p>
+        </div>
+        <div class="tip">
+          <h3>Respect local customs</h3>
+          <p>Learn basic greetings and etiquette. A little effort goes a long way.</p>
+        </div>
+        <div class="tip">
+          <h3>Budget smart</h3>
+          <p>Track daily spend and prioritize must-do's. Free walking tours are a great intro.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="section-head">
+        <h2>About this guide</h2>
+        <p>We provide you all the necessary guide in order make your trip Amazing and fun.</p>
+      </div>
+      <div class="about">
+        <p>This site demonstrates clean structure, accessible markup, and responsive design. You can expand it with more destinations, detailed itineraries, and a full blog later.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <p>© <span id="y"></span> Travel Destination Guide</p>
+      <a class="button small" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+
+</body>
+</html>
